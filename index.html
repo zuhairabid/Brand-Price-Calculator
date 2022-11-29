@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <script src="https://cdn.tailwindcss.com"></script>
+      <script>
+         tailwind.config = {
+            theme: {
+               extend: {
+                  colors: {
+                     clifford: "#da373d",
+                  },
+                  fontFamily: {
+                     comforta: ["Comfortaa", "cursive"],
+                  },
+               },
+            },
+         }
+      </script>
+      <title>Document</title>
+   </head>
+   <body class="h-screen flex justify-center items-center">
+      <div
+         class="shadow-lg p-5 w-1/2 font-comforta m-10 border-3 border-black-200 flex flex-col items-center space-y-5"
+      >
+         <h1 class="text-fuchsia-600">Brand Price Calculator</h1>
+         <p class="text-gray-500 text-center">
+            Select a platform, media type and enter your following size to
+            calculate a range of rates to charge brands.
+         </p>
+         <p class="text-3xl font-[400]">$<span id="demo">price</span></p>
+         <input
+            id="rangeSLider"
+            class="w-60"
+            type="range"
+            oninput="myFunction(this.value)"
+         />
+         <div class="flex space-x-2 border-2 rounded-sm px-7 py-2 w-full">
+            <div class="grow border-r-2">
+               <p>Select platform</p>
+               <select id="platform" class="text-gray-500">
+                  <option value="0">Tiktok</option>
+                  <option value="1">Youtube</option>
+                  <option value="2">Instagram</option>
+               </select>
+            </div>
+            <div class="grow border-r-2">
+               <p>Type</p>
+               <select class="text-gray-500">
+                  <option value="volvo">Story</option>
+                  <option value="saab">Reels</option>
+                  <option value="mercedes">Videos</option>
+               </select>
+            </div>
+            <div class="grow border-r-2">
+               <p>Following size</p>
+               <input
+                  id="followerNum"
+                  type="number"
+                  placeholder="Enter  number of followers"
+               />
+            </div>
+            <button
+               class="grow bg-fuchsia-400 rounded-lg"
+               onclick="handleInput()"
+            >
+               Calculate
+            </button>
+         </div>
+      </div>
+   </body>
+   <script>
+      function myFunction(val) {
+         document.getElementById("demo").innerHTML = val
+      }
+      function handleInput() {
+         console.log("clicked")
+         var follower = document.getElementById("followerNum").value
+         console.log(follower)
+         // console.log(tiktok)
+         var followerPrice = followerToPrice(
+            parseInt(follower),
+            parseInt(document.getElementById("platform").value)
+         )
+         console.log(followerPrice)
+         followerPrice = followerPrice.split("/")
+         let minValue = followerPrice[0]
+         let maxValue = followerPrice[followerPrice.length - 1]
+         document.getElementById("rangeSLider").min = minValue
+         document.getElementById("rangeSLider").max = maxValue
+         document.getElementById("rangeSLider").value = document.getElementById(
+            "demo"
+         ).innerHTML = Math.round((parseInt(minValue) + parseInt(maxValue)) / 2)
+      }
+   </script>
+   <script src="index.js"></script>
+</html>
