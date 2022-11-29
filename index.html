@@ -12,7 +12,9 @@
             theme: {
                extend: {
                   colors: {
-                     clifford: "#da373d",
+                     purple: "#A96DA1",
+                     black_light: "rgba(0, 0, 0, 0.6)",
+                     black_light2: "rgba(0, 0, 0, 0.5)",
                   },
                   fontFamily: {
                      comforta: ["Comfortaa", "cursive"],
@@ -25,47 +27,56 @@
    </head>
    <body class="h-screen flex justify-center items-center">
       <div
-         class="shadow-lg p-5 w-1/2 font-comforta m-10 border-3 border-black-200 flex flex-col items-center space-y-5"
+         class="shadow-lg p-5 xl:w-1/2 font-comforta m-10 border-3 border-black-200 flex flex-col items-center space-y-5"
       >
-         <h1 class="text-fuchsia-600">Brand Price Calculator</h1>
-         <p class="text-gray-500 text-center">
+         <h1 class="text-purple">Brand Price Calculator</h1>
+         <p class="text-black_light text-center">
             Select a platform, media type and enter your following size to
             calculate a range of rates to charge brands.
          </p>
-         <p class="text-3xl font-[400]">$<span id="demo">price</span></p>
-         <input
-            id="rangeSLider"
-            class="w-60"
-            type="range"
-            oninput="myFunction(this.value)"
-         />
-         <div class="flex space-x-2 border-2 rounded-sm px-7 py-2 w-full">
-            <div class="grow border-r-2">
+         <div
+            id="visualizer"
+            class="hidden flex flex-col text-center space-y-5"
+         >
+            <p class="text-3xl font-[700]">$<span id="demo"></span></p>
+            <input
+               id="rangeSLider"
+               class="w-60"
+               type="range"
+               oninput="myFunction(this.value)"
+            />
+         </div>
+
+         <div
+            class="flex flex-col space-y-5 lg:space-y-0 lg:flex-row lg:space-x-3 border border-purple rounded-sm px-7 py-2 w-full items-center justify-center text-center lg:text-left"
+         >
+            <div class="grow lg:border-r border-black">
                <p>Select platform</p>
-               <select id="platform" class="text-gray-500">
+               <select id="platform" class="text-black_light2 text-sm">
                   <option value="0">Tiktok</option>
                   <option value="1">Youtube</option>
                   <option value="2">Instagram</option>
                </select>
             </div>
-            <div class="grow border-r-2">
+            <div class="grow lg:border-r border-black">
                <p>Type</p>
-               <select class="text-gray-500">
+               <select class="text-black_light2 text-sm">
                   <option value="volvo">Story</option>
                   <option value="saab">Reels</option>
                   <option value="mercedes">Videos</option>
                </select>
             </div>
-            <div class="grow border-r-2">
+            <div class="grow">
                <p>Following size</p>
                <input
                   id="followerNum"
                   type="number"
                   placeholder="Enter  number of followers"
+                  class="text-sm text-black_light2"
                />
             </div>
             <button
-               class="grow bg-fuchsia-400 rounded-lg"
+               class="text-white grow bg-purple rounded-lg p-3"
                onclick="handleInput()"
             >
                Calculate
@@ -79,6 +90,7 @@
       }
       function handleInput() {
          console.log("clicked")
+         document.getElementById("visualizer").style.display = "block"
          var follower = document.getElementById("followerNum").value
          console.log(follower)
          // console.log(tiktok)
