@@ -3,6 +3,7 @@
    <head>
       <meta charset="UTF-8" />
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <link rel="stylesheet" href="style.css" />
       <!-- <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin /> -->
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,6 +11,7 @@
       <style>
          @import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;500;600;700&display=swap");
       </style>
+
       <script>
          tailwind.config = {
             theme: {
@@ -30,7 +32,8 @@
    </head>
    <body class="h-screen flex justify-center items-center">
       <div
-         class="shadow-lg p-5 xl:w-1/2 font-comforta m-10 border-3 border-black-200 flex flex-col items-center space-y-5"
+         style="box-shadow: 0 0 12px #9b9b9bb8"
+         class="p-5 xl:w-1/2 font-comforta m-10 border-3 border-black-200 flex flex-col items-center space-y-5"
       >
          <h1 class="text-purple">Brand Price Calculator</h1>
          <p class="text-black_light text-center">
@@ -42,12 +45,50 @@
             class="hidden flex flex-col text-center space-y-5"
          >
             <p class="text-3xl font-[700]">$<span id="demo"></span></p>
+            <div
+               id="msg_1"
+               class="hidden bg-yellow-200 px-3 py-2 text-sm rounded-md"
+            >
+               <p>💰</p>
+               <p class="font-bold text-yellow-600">Great Chance Aim higher!</p>
+               <p class="text-yellow-600">
+                  Most Creators Similar to you price within this range
+               </p>
+            </div>
+            <div id="msg_2" class="bg-green-200 px-3 py-2 text-sm rounded-md">
+               <p>💸</p>
+               <p class="font-bold text-green-600">Great Chance</p>
+               <p class="text-green-600">
+                  Creators like you have negotiated this price on past deals
+               </p>
+            </div>
+            <div
+               id="msg_3"
+               class="hidden bg-orange-200 px-3 py-2 text-sm rounded-md"
+            >
+               <p>🏀</p>
+               <p class="font-bold text-orange-600">Shoot you shot</p>
+               <p class="text-orange-600">
+                  You'll be one of the first to price a brand within this range
+               </p>
+            </div>
             <input
                id="rangeSLider"
                class="w-60"
                type="range"
                oninput="myFunction(this.value)"
             />
+            <div class="flex">
+               <div class="minVal text-left font-bold">
+                  <p id="min_value_show" class="text-lg">$30</p>
+                  <p>Minimum</p>
+               </div>
+               <div class="grow"></div>
+               <div class="maxVal text-right font-bold">
+                  <p id="max_value_show" class="text-lg">$50</p>
+                  <p>Maximum</p>
+               </div>
+            </div>
          </div>
 
          <div
@@ -55,7 +96,11 @@
          >
             <div class="grow lg:border-r border-black">
                <p>Select platform</p>
-               <select id="platform" class="text-black_light2 text-sm">
+               <select
+                  id="platform"
+                  class="text-black_light2 text-sm"
+                  oninput="handleType(this)"
+               >
                   <option value="0">Tiktok</option>
                   <option value="1">Youtube</option>
                   <option value="2">Instagram</option>
@@ -63,10 +108,16 @@
             </div>
             <div class="grow lg:border-r border-black">
                <p>Type</p>
-               <select class="text-black_light2 text-sm">
+               <select id="ig_type" class="text-black_light2 text-sm">
                   <option value="volvo">Story</option>
                   <option value="saab">Reels</option>
-                  <option value="mercedes">Videos</option>
+                  <option value="mercedes">Post</option>
+               </select>
+               <select
+                  id="onlyVideoType"
+                  class="hidden text-black_light2 text-sm"
+               >
+                  <option value="volvo">Video</option>
                </select>
             </div>
             <div class="grow">
@@ -88,13 +139,34 @@
       </div>
    </body>
    <script>
+      let minValue
+      let maxValue
+      msg_1 = document.getElementById("msg_1")
+      msg_2 = document.getElementById("msg_2")
+      msg_3 = document.getElementById("msg_3")
       function myFunction(val) {
          document.getElementById("demo").innerHTML = val
+         val = parseInt(val)
+         minValue = parseInt(minValue)
+         maxValue = parseInt(maxValue)
+         if (val >= maxValue - 4) {
+            msg_1.style.display = msg_2.style.display = "none"
+            msg_3.style.display = "block"
+            // console.log(val)
+         } else if (val <= minValue + 4) {
+            msg_2.style.display = msg_3.style.display = "none"
+            msg_1.style.display = "block"
+         } else {
+            msg_1.style.display = msg_3.style.display = "none"
+            msg_2.style.display = "block"
+            console.log(val)
+         }
       }
+
       function handleInput() {
          console.log("clicked")
-         document.getElementById("visualizer").style.display = "block"
          var follower = document.getElementById("followerNum").value
+         document.getElementById("visualizer").style.display = "block"
          console.log(follower)
          // console.log(tiktok)
          var followerPrice = followerToPrice(
@@ -103,13 +175,26 @@
          )
          console.log(followerPrice)
          followerPrice = followerPrice.split("/")
-         let minValue = followerPrice[0]
-         let maxValue = followerPrice[followerPrice.length - 1]
+         minValue = followerPrice[0]
+         maxValue = followerPrice[followerPrice.length - 1]
          document.getElementById("rangeSLider").min = minValue
          document.getElementById("rangeSLider").max = maxValue
          document.getElementById("rangeSLider").value = document.getElementById(
             "demo"
          ).innerHTML = Math.round((parseInt(minValue) + parseInt(maxValue)) / 2)
+
+         document.getElementById("min_value_show").innerHTML = "$" + minValue
+         document.getElementById("max_value_show").innerHTML = "$" + maxValue
+      }
+
+      function handleType(e) {
+         if (e.value == "0" || e.value == "1") {
+            document.getElementById("onlyVideoType").style.display = "block"
+            document.getElementById("ig_type").style.display = "none"
+         } else {
+            document.getElementById("onlyVideoType").style.display = "none"
+            document.getElementById("ig_type").style.display = "block"
+         }
       }
    </script>
    <script src="index.js"></script>
