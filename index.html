@@ -46,7 +46,7 @@
             </p>
             <div
                id="visualizer"
-               class="hidden flex flex-col text-center space-y-5"
+               class="hidden flex flex-col text-center space-y-6 items-center mb-5"
             >
                <p class="text-3xl font-[700]">$<span id="demo"></span></p>
                <div
@@ -88,7 +88,7 @@
                   type="range"
                   oninput="myFunction(this.value)"
                />
-               <div class="flex">
+               <div class="flex w-full">
                   <div class="minVal text-left font-bold">
                      <p id="min_value_show" class="text-lg">$30</p>
                      <p>Minimum</p>
@@ -98,6 +98,14 @@
                      <p id="max_value_show" class="text-lg">$50</p>
                      <p>Maximum</p>
                   </div>
+               </div>
+               <div class="py-4 flex items-center flex-col lg:w-1/2 text-sm">
+                  <p>⚡</p>
+                  <p class="font-bold">HOW IS PRICING CALCULATED?</p>
+                  <p class="text-center mt-2 text-gray-600">
+                     Pricing is calculated based on industry data compared
+                     against the filter you select.
+                  </p>
                </div>
             </div>
             <!-- ----------------------------------------------------------------------- -->
