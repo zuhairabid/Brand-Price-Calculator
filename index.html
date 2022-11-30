@@ -35,7 +35,7 @@
       <div></div>
       <div class=" ">
          <div
-            class="shadow-cs p-5 xl:w-2/3 xl:m-auto xl:mt-10 lg:m-10 font-comforta border-3 border-black-200 flex flex-col items-center space-y-5"
+            class="shadow-cs p-5 xl:w-2/3 xl:m-auto xl:my-10 lg:m-10 font-comforta border-3 border-black-200 flex flex-col items-center space-y-5"
          >
             <h1 class="text-purple text-2xl font-bold lg:text-xl">
                Brand Price Calculator
@@ -99,7 +99,9 @@
                      <p>Maximum</p>
                   </div>
                </div>
-               <div class="py-4 flex items-center flex-col lg:w-1/2 text-sm">
+               <div
+                  class="py-4 flex items-center flex-col lg:w-1/2 text-sm lg:m-auto"
+               >
                   <p>⚡</p>
                   <p class="font-bold">HOW IS PRICING CALCULATED?</p>
                   <p class="text-center mt-2 text-gray-600">
@@ -155,20 +157,20 @@
                      oninput="followerInput(this)"
                   />
                </div>
-               <button
-                  id="active"
-                  class="hidden text-white grow bg-purple rounded-lg w-full lg:w-min p-3 mx-auto lg:h-min"
-                  onclick="handleInput()"
-               >
-                  Calculate
-               </button>
-               <button
-                  id="unactive"
-                  class="text-gray-500 grow bg-gray-200 rounded-lg w-full lg:w-min p-3 mx-auto lg:h-min"
-               >
-                  Calculate
-               </button>
             </div>
+            <button
+               id="active"
+               class="hidden text-white grow bg-purple rounded-lg w-full lg:w-min p-3 mx-auto lg:h-min"
+               onclick="handleInput(this)"
+            >
+               Calculate
+            </button>
+            <button
+               id="unactive"
+               class="text-gray-500 grow bg-gray-200 rounded-lg w-full lg:w-min p-3 mx-auto lg:h-min"
+            >
+               Calculate
+            </button>
          </div>
       </div>
    </body>
@@ -197,8 +199,12 @@
          }
       }
 
-      function handleInput() {
+      function handleInput(e) {
          console.log("clicked")
+         document.querySelector("button#active").innerText = "Calculate Again"
+         e.addEventListener("click", () => {
+            document.location.reload()
+         })
          var follower = document.getElementById("followerNum").value
          document.getElementById("visualizer").style.display = "block"
          console.log(follower)
